@@ -7,6 +7,7 @@
 (require 'ob-comint)
 (require 'ob-eval)
 (require 'js)
+(require 'verb)
 
 (add-to-list 'org-babel-tangle-lang-exts '("json"))
 
