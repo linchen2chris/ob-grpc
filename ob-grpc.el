@@ -7,7 +7,6 @@
 (require 'ob-comint)
 (require 'ob-eval)
 (require 'js)
-(require 'verb)
 
 (add-to-list 'org-babel-tangle-lang-exts '("json"))
 
@@ -156,11 +155,11 @@ in PROTO-FILE and IMPORT-PATHS.  Else return methods under SERVICE."
 	 (plain-text (org-entry-get nil "PLAIN-TEXT" t))
          (method (alist-get :method params)))
     (shell-command-to-string
-     (message "grpcurl -vv %s -proto %s %s -H \"Authorization: Bearer %s\" -d %s \"%s\" \"%s\""
+     (message "grpcurl -vv %s -proto %s %s -H \"Authorization: %s\" -d %s \"%s\" \"%s\""
 	      (ob-grpc--concat-imports import-paths)
 	      proto-file
 	      (if (equal plain-text "no") "" "-plaintext")
-              (verb-var auth-token)
+              (symbol-value 'global-token)
 	      (prin1-to-string body)
 	      grpc-endpoint
 	      method
